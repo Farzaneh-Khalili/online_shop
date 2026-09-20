@@ -12,10 +12,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Main {
+    static final String REQUEST_FILE = "requests.txt";
+
     static User user1 = new User("firstuser", "pass1234", "user.one@gmail.com",
             "09901231020", "tehran", 2000);
     static User user2 = new User("heli", "heli7496", "h.ja@gmail.com", "09122584130", "iran.kerman" , 150);
-    static Seller seller1 = new Seller("Goody", "1212pass", 570, true);
+    static Seller seller1 = new Seller("Goody", "1212pass", 57000, true);
     static Shop shop1 = new Shop();
     static Admin mainAdmin = new Admin("mainAdmin", "1973admin", "admin.shop059@gamil.com");
     static Watch watch1 = new Watch("watch1",70,9,"good, more beautiful in close look, lovely",
@@ -95,6 +97,20 @@ public class Main {
         shop1.addToListOfAllSportEquipment(sport1);
         shop1.addToListOfAllHeadphones(headphone1);
         shop1.addToListOfAllBags(bag1);
+
+        seller1.addToListOfAvailableProducts(watch1);
+        seller1.addToListOfAvailableProducts(mobile1);
+        seller1.addToListOfAvailableProducts(mobile2);
+        seller1.addToListOfAvailableProducts(book1);
+        seller1.addToListOfAvailableProducts(headphone1);
+        seller1.addToListOfAvailableProducts(rug1);
+        seller1.addToListOfAvailableProducts(toy1);
+        seller1.addToListOfAvailableProducts(sport1);
+        seller1.addToListOfAvailableProducts(cloth1);
+        seller1.addToListOfAvailableProducts(cloth2);
+        seller1.addToListOfAvailableProducts(bag1);
+        seller1.addToListOfAvailableProducts(shoe1);
+        seller1.addToListOfAvailableProducts(painting1);
 
         user1.addToShoppingCartUser(bag1);
         user1.addToShoppingCartUser(cloth1);
@@ -244,7 +260,7 @@ public class Main {
                                 shop1.addToListOfAllSellers(newSeller);
                                 shop1.addToListOfAllAccounts(newSeller);
                                 mapperSeller.put(newCompanyName, newSeller);
-                                try (FileWriter f = new FileWriter("C:\\Users\\Farzaneh\\digikala.txt", true);
+                                try (FileWriter f = new FileWriter(REQUEST_FILE, true);
                                      BufferedWriter b = new BufferedWriter(f);
                                      PrintWriter p = new PrintWriter(b);) {
 
@@ -437,11 +453,12 @@ public class Main {
                             float userWallet = userValue.getWallet();
                             float totalPrice = userValue.getTheTotalPrice();
                             if (userWallet >= totalPrice) {
-                                try (FileWriter f = new FileWriter("C:\\Users\\Farzaneh\\digikala.txt", true);
+                                try (FileWriter f = new FileWriter(REQUEST_FILE, true);
                                      BufferedWriter b = new BufferedWriter(f);
                                      PrintWriter p = new PrintWriter(b);) {
 
                                     p.println("order of user(" + username + ").Wait for confirmation.");
+                                    userValue.setDidFinalized(true);
 
                                 } catch (IOException i) {
                                     i.printStackTrace();
@@ -472,15 +489,15 @@ public class Main {
 
             case 3 :
                 if (!userValue.getAskFund()) {
-                    System.out.println("There is " + user1.getWallet() + "$ in your wallet");
+                    System.out.println("There is " + userValue.getWallet() + "$ in your wallet");
                     userMenu();
                 } else {
-                    File newFile = new File("C:\\Users\\Farzaneh\\digikala.txt");
+                    File newFile = new File(REQUEST_FILE);
                     if (newFile.length() == 0) {
                         System.out.println("your request confirmed by an admin");
                         int addingFund = (int) (userValue.getAddFund() + userValue.getWallet());
                         userValue.setWallet(addingFund);
-                        userValue.getWallet();
+                        System.out.println(userValue.getWallet());
                         userMenu();
                     }
 
@@ -494,7 +511,7 @@ public class Main {
                 System.out.println("What amount of money(in $) do you want to add to your wallet?");
                 int requestFund = scanner.nextInt();
                 userValue.setAddFund(requestFund);
-                try (FileWriter f = new FileWriter("C:\\Users\\Farzaneh\\digikala.txt", true);
+                try (FileWriter f = new FileWriter(REQUEST_FILE, true);
                      BufferedWriter b = new BufferedWriter(f);
                      PrintWriter p = new PrintWriter(b);) {
 
@@ -528,7 +545,7 @@ public class Main {
             case 7 :
 
                 if (userValue.getDidFinalized()) {
-                    File newFile = new File("C:\\Users\\Farzaneh\\digikala.txt");
+                    File newFile = new File(REQUEST_FILE);
 
                     if (newFile.length() == 0) {
 
@@ -677,7 +694,7 @@ public class Main {
                 break;
 
             case 10 :
-                userMenu();
+                mainMenu();
                 break;
 
             default:
@@ -694,7 +711,7 @@ public class Main {
         String companyName = scanner.next();
         Seller sellerValue = mapperSeller.get(companyName);
 
-        File newFile = new File("C:\\Users\\Farzaneh\\digikala.txt");
+        File newFile = new File(REQUEST_FILE);
         if (newFile.length() == 0) {
             sellerValue.setDidGetAuthorization(true);
         } else {
@@ -987,7 +1004,7 @@ public class Main {
         String username = scanner.next();
         Admin adminValue = mapperAdmin.get(username);
 
-        System.out.println("What do you want to do?\n1.add new admins\t2.view users' information\t3.see requests and confirm them");
+        System.out.println("What do you want to do?\n1.add new admins\t2.view users' information\t3.see requests and confirm them\t4.back to the main menu");
         int adminCommand = scanner.nextInt();
         switch (adminCommand) {
             case 1 :
@@ -1029,14 +1046,14 @@ public class Main {
                 break;
 
             case 3 :
-                File newFile = new File("C:\\Users\\Farzaneh\\digikala.txt");
+                File newFile = new File(REQUEST_FILE);
                 if (newFile.length() == 0) {
                     System.out.println("There isn't any requests right now");
                     adminMenu();
                 }
                 else {
                     try {
-                        File myObj = new File("C:\\Users\\Farzaneh\\digikala.txt");
+                        File myObj = new File(REQUEST_FILE);
                         Scanner myReader = new Scanner(myObj);
                         System.out.println("Here are the request ↷");
                         while (myReader.hasNextLine()) {
@@ -1052,7 +1069,7 @@ public class Main {
                     int confirmCommand = scanner.nextInt();
                     switch (confirmCommand) {
                         case 1:
-                            PrintWriter writer = new PrintWriter("C:\\Users\\Farzaneh\\digikala.txt");
+                            PrintWriter writer = new PrintWriter(REQUEST_FILE);
                             writer.print("");
                             writer.close();
                             System.out.println("Requests was confirmed successfully.\nWe are going to th main menu");
@@ -1072,6 +1089,10 @@ public class Main {
                 }
 
                 break;
+
+            case 4 :
+                System.out.println("You are going back to the main menu");
+                mainMenu();
 
             default:
                 System.out.println("Enter a number from 1 to 3");

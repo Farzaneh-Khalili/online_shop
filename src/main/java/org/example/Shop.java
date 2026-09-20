@@ -166,12 +166,11 @@ public class Shop {
 
     @Override
     public String toString() {
-        return "Shop{" +
-                "name='" + name + '\'' +
-                ", web address='" + webAddress + '\'' +
-                ", support phone='" + supportPhone + '\'' +
-                ", support email address='" + supportEmailAddress + '\'' +
-                '}';
+        return "Shop \n" +
+                "name='" + name + '\n' +
+                ", web address='" + webAddress + '\n' +
+                ", support phone='" + supportPhone + '\n' +
+                ", support email address='" + supportEmailAddress + "\n";
     }
 
     public boolean loginUser(String username, String password) {

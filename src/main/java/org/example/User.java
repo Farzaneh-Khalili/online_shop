@@ -187,9 +187,7 @@ public class User extends Admin{
     }
 
     public void removeAllInShoppingCart() {
-        for (int i = 0; i < shoppingCart.size(); i++) {
-            shoppingCart.remove(shoppingCart.get(i));
-        }
+        shoppingCart.removeAll(shoppingCart);
         System.out.println("Your shopping cart now is empty");
     }
 
