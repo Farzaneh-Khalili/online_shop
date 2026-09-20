@@ -1,0 +1,46 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Java
+*.class
+out/
+bin/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local project data
+digikala.txt
+requests.txt
+
+# IntelliJ / local Gradle files
+7.5.1/
+buildOutputCleanup/
+vcs-1/
+
+# IntelliJ project files in root
+compiler.xml
+file-system.probe
+gradle.xml
+jarRepositories.xml
+misc.xml
+workspace.xml
+# Office temporary files
+~$*
